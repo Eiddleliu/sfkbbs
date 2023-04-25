@@ -1,0 +1,70 @@
+body,ul,li,h1,h2,h4,h3,h5,h6,p,img,a,input,button{
+    margin:0;
+    padding: 0;
+}
+body{
+    font-family: "微软雅黑";
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #333;
+}
+a:hover,.tab a:hover{
+    color: #fff;
+}
+img{
+    vertical-align: top;
+    border: none;
+}
+input,button{
+    border: none;
+    background:none;
+    outline:none;
+}
+.song_reco,.new_song,.brilliant,.rank,.new_disc,.foot{
+    /*padding: 5px 0px 50px;*/
+}
+.reco_con,.song_con,.bri_con,.rank_con,.disc_con,.foot_con,.head_con{
+    width:1200px;
+    margin: 0 auto;
+}
+
+
+
+/* 底部 */
+.foot{
+    background: #333;
+    overflow: hidden;
+    color: #999;
+    margin-top:33px;
+}
+.foot a{
+    color: #999;
+    display: block;
+}
+.foot_con{
+    overflow: hidden;
+}
+
+
+/* copyright */
+.copyright{
+    margin:33px;
+    padding-top:29px;
+    /*border-top:1px solid #7e7c7c;*/
+}
+.copyright p{
+    text-align: center;
+    font-size: 14px;
+}
+.copyright p a{
+    font-size: 14px;
+    line-height: 28px;
+    display: inline;
+}
+.copyright p a:hover{
+    color: #fff;
+}

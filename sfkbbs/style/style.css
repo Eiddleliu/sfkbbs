@@ -1,0 +1,42 @@
+
+
+
+/* 底部 */
+.foot{
+    background: #333;
+    overflow: hidden;
+    color: #999;
+    margin-top:150px;
+
+}
+.foot a{
+    color: #999;
+    display: block;
+}
+.foot_con{
+    overflow: hidden;
+}
+
+
+/* copyright */
+.copyright{
+    margin:33px;
+    padding-top:29px;
+    /*border-top:1px solid #7e7c7c;*/
+}
+.copyright p{
+    text-align: center;
+    font-size: 14px;
+}
+.copyright p a{
+    font-size: 14px;
+    line-height: 28px;
+    display: inline;
+}
+.copyright p a:hover{
+    color: #fff;
+}
+.comment{
+    width: 80%;
+    margin: 0 auto;
+}

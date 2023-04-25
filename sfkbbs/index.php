@@ -1,0 +1,123 @@
+<?php
+include_once 'inc/config.inc.php';
+include_once 'inc/mysql.inc.php';
+include_once 'inc/tool.inc.php';
+$link=connect();
+$member_id=is_login($link);
+
+
+$template['title']='首页';
+$template['css']=array('style/public.css','style/index.css','style/swiper.min.css','style/swiper.css','style/style.css');
+?>
+
+<?php include 'inc/header.inc.php'?>
+
+
+
+
+    <!-- Swiper -->
+    <section class="pc-banner">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiper-slide-center none-effect"><a href="/list_father.php?id=4"><img src="pcbanner/images/top_hero_cw_im17.jpg" ></a></div>
+                <div class="swiper-slide"><a href="/list_father.php?id=2"><img src="pcbanner/images/top_hero_cs_2018.jpg" ></a></div>
+                <div class="swiper-slide"><a href="/list_father.php?id=3"><img src="pcbanner/images/top_hero_cs_2019.jpg" ></a></div>
+                <div class="swiper-slide"><a href="/list_father.php?id=5"><img src="pcbanner/images/top_hero_cs_2020.jpg" ></a></div>
+                <div class="swiper-slide"><a href="/list_father.php?id=1"><img src="pcbanner/images/top_hero_conc_2017.jpg" ></a></div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+        <!--    <div class="button">-->
+        <!--        <div class="swiper-button-prev"></div>-->
+        <!--        <div class="swiper-button-next"></div></div>-->
+    </section>
+
+    <div class="bigbox">
+        <div id="hot" class="auto">
+            <div class="title" style="font-size: 20px;">热门动态</div>
+            <ul class="newlist">
+                <?php
+                 $query="select * from sfk_content ORDER BY times DESC LIMIT 6";
+                 $result_title=execute($link, $query);
+                 $query="select * from sfk_content where module_id";
+                 $result_show=execute($link, $query);
+                while($data_father=mysqli_fetch_assoc($result_title)){
+                ?>
+                    <li><a href="#">[热门]</a> <a href="show.php?id=<?php echo $data_father['id'] ?>"><?php echo $data_father['title']?></a></li>
+                <?php }?>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+        <?php
+        $query="select * from sfk_father_module order by sort desc";
+        $result_father=execute($link, $query);
+        while($data_father=mysqli_fetch_assoc($result_father)){
+        ?>
+        <div class="box auto">
+            <div class="title">
+                <a href="list_father.php?id=<?php echo $data_father['id']?>" style="color:#1f2233;font-size: 20px;"><?php echo $data_father['module_name']?></a>
+            </div>
+            <div class="classList">
+                <?php
+                $query="select * from sfk_son_module where father_module_id={$data_father['id']}";
+                $result_son=execute($link, $query);
+                if(mysqli_num_rows($result_son)){
+                    while ($data_son=mysqli_fetch_assoc($result_son)){
+                        $query="select count(*) from sfk_content where module_id={$data_son['id']} and time > CURDATE()";
+                        $count_today=num($link,$query);
+                        $query="select count(*) from sfk_content where module_id={$data_son['id']}";
+                        $count_all=num($link,$query);
+                        $html=<<<A
+                    
+					<div class="childBox">
+					<a href="list_son.php?id={$data_son['id']}">
+					    <div class="childBox_img"><img class="childBox_img_size" src="{$data_son['imgurl']}" alt=""></div>
+						<h2><a href="list_son.php?id={$data_son['id']}">{$data_son['module_name']}</a> <span>(今日{$count_today})</span></h2>
+						<div style="width: 900px">{$data_son['info']}</div><br />
+						<p style="color: #7d7d7d" >帖子：{$count_all}</p><br />
+						</a>
+					</div>
+                   
+A;
+                        echo $html;
+                    }
+                }else{
+                    echo '<div style="padding:10px 0;">暂无子版块...</div>';
+                }
+                ?>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Swiper JS -->
+    <script src="style/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        window.onload = function() {
+            var swiper = new Swiper('.swiper-container',{
+                autoplay:3000,
+                speed:1000,
+                autoplayDisableOnInteraction : false,
+                loop:true,
+                centeredSlides : true,
+                slidesPerView:2,
+                pagination : '.swiper-pagination',
+                paginationClickable:true,
+                prevButton:'.swiper-button-prev',
+                nextButton:'.swiper-button-next',
+                onInit:function(swiper){
+                    swiper.slides[2].className="swiper-slide swiper-slide-active";//第一次打开不要动画
+                },
+                breakpoints: {
+                    668: {
+                        slidesPerView: 1,
+                    }
+                }
+            });
+        }
+    </script>
+
+<?php }?>
+<?php include 'inc/footer.inc.php'?>
